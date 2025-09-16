@@ -24,3 +24,5 @@ As part of `Deliverable ⓵ Development deployment: JWT Pizza`, start up the app
 | View Admin page                                     | adminDashboard.jsx | [GET] /api/franchise?page=${page}&limit=${limit}&name=${nameFilter}` | `SELECT objectId FROM userRole WHERE role='franchisee' AND userId=?` <br> `SELECT id, name FROM franchise WHERE id in (${franchiseIds.join(',')})` |
 | Create a franchise for t@jwt.com                    | createFranchise.jsx| [POST] /api/franchise | `SELECT id, name FROM user WHERE email=?` <br> `INSERT INTO franchise (name) VALUES (?)` <br> `INSERT INTO userRole (userId, role, objectId) VALUES (?, ?, ?)` |
 | Close the franchise for t@jwt.com                   | closeFranchise.jsx | [DELETE] /api/franchise/${franchise.id}/store/${store.id} | `DELETE FROM store WHERE franchiseId=?` <br> `DELETE FROM userRole WHERE objectId=?` <br> `DELETE FROM franchise WHERE id=?`|
+
+Now I know how to do yml files
