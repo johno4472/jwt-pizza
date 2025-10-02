@@ -4,10 +4,49 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 jobs:
-  test:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.set_version.outputs.version }}
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22.x'
+
+      - name: set version
+        id: set_version
+        run: |
+          version=$(date +'%Y%m%d.%H%M%S')
+          echo "version=$version" >> "$GITHUB_OUTPUT"
+          printf '{"version": "%s" }' "$version" > public/version.json
+
+      - name: Build
+        run: |
+          npm ci && npm run build
+          cp dist/index.html dist/404.html
+
+      - name: Update pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/
+  deploy:
+    needs: build
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+<<<<<<< HEAD
       - run: echo "Hello GitHub Actions"
       - name: Run tests
         run: |
@@ -18,3 +57,8 @@ jobs:
           coverage=$(jq '.total.lines.pct' coverage/coverage-summary.json)
           color=$(echo "$coverage < 80" | bc | awk '{if ($1) print "red"; else print "green"}')
           curl -s -X POST "https://pizza-factory.cs329.click/api/badge/${{ secrets.NET_ID }}/jwtpizzacoverage?label=Coverage&value=$coverage%25&color=$color" -H "authorization: bearer ${{ secrets.FACTORY_API_KEY }}"
+=======
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+>>>>>>> a367b31112a68f120893603d809ae32b9cfea10f
