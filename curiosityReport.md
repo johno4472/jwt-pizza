@@ -1,9 +1,9 @@
-#Topic: The hows and beyond of Git Versioning
+# Topic: The hows and beyond of Git Versioning
 
-###The Why:
+### The Why:
 I chose this topic, because I know minimal commands and tools for git version control, so I can handle version control provided nothing goes wrong, but I have had a hard time in situations where things have gone wrong and I had to clean it up. In fact, I spent a few extra hours on one deliverable for this class because there was a big problem between the main branch on my local device and the remote branch on github. It was very frustrating and I ended up making an entirely new copy of my repository and started over, because I created more messes and my old code repository seemed unsalvageable. I want to understand git well enough to handle the messy scenarios so I don't have to redundantly copy information to start over when there's a problem. I will explore some of the other tools/operations available for better version control with git.
 
-###My problem (for context):
+### My problem (for context):
 For the metrics deliverable (I belive deliverable 7), after finishing my code and getting everything working, I committed and pushed my final code. There was an issue. What happened was I didn't realize that I saved a shell script in the source directory of my project, and forgot to include it in the git ignore file. This shell script included my API key, which I had previously included as a github secret. Apparently, when you try to push a change to github, it scans the commited files for any github secret, to prevent its addition to the master repository. So I got an error message warning me that my commits contained a repository secret and I couldn't push the changes to github. Then I had the problem of how to remove a commit (an already staged change) without losing my progress. I looked up some weird command, and did the command, and after a chain of other small jenky commands, the my local repository no longer was associated with the master repository in github. I don't know what I did, but it's the last time I'll go to chatGPT for git commands. I ended up cloning my repository again and then redoing the changes, because whatever I had done made it seem irreparable.
 
 ###Git commands I already knew:
@@ -15,7 +15,7 @@ For the metrics deliverable (I belive deliverable 7), after finishing my code an
 - `git pull` - pulls in any changes from the remote repository to the local repository so they're in sync (this, like pushing, can get messy if the local and remote repository have both been changed)
 - `git status` - lets you know the status of your repository (which files have been added or changed and if they have been committed or not)
 
-###Git commands I would have found useful:
+### Git commands I would have found useful:
 
 - `git reset HEAD~1` - This command helps for my specific situation. It undoes the latest local commit (but only if I haven't pushed the changes yet). This is what I should have done in my situation
 - `git revert HEAD` - This command does the same thing, but if I have already pushed the changes
@@ -26,10 +26,10 @@ For the metrics deliverable (I belive deliverable 7), after finishing my code an
 - `git diff` - shows the difference between the local repository and the latest version of the remote repository. This is useful because I can see side by side how far behind I am, or what I need to change between my local and remote repositories
   These commands and their simple information I pulled from the git docs on the git website: https://git-scm.com/docs
 
-###Random fun:
+### Random fun:
 Random side note. In looking into extra git commands and using them to help me more carefully manage version control, I discovered that there is a git book, which is a comprehensive guide to git. Book found here: https://git-scm.com/book/en/v2. A lot of times I learn better when reading generally without a need, rather than searching specifically for one piece of information, because reading generally, when I'm invested, lets me explore less specific avenues and discover something I wouldn't have found out otherwise, then to have that information in my toolbox of useful knowledge to use later. The git book is something I want to read through, not looking for anything, just to understand more of the basic principles of good version control. I've read a few tech books, and maybe this can be my next one.
 
-###VS Code Source Control
+### VS Code Source Control
 I actually have never once (as far as I recall) done any git source control through VS code. I have always done it through my git bash terminal, because
 
 1. It was the first thing I learned and I didn't want to try a new thing if what I was doing already workd
