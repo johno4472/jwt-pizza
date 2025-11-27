@@ -41,4 +41,4 @@ It's pretty cool to navigate the Source Control view and see the different optio
 
 I also found out that in the control Palette (get there by typing `ctrl+shift+P`), I can simply look up the control `Git: Undo Last Commit` to undo the last commit I had staged. As cool as it is, it's kind of annoying to know that the solution to my problem was this easy. But that's okay, now I know.
 
-All of the information from this section was gathered from the page on the Visual Studio Code website called `Using Git Source Control in VS Code`
+All of the information from this section was gathered from the page on the Visual Studio Code website called `Using Git Source Control in VS Code` fournd here: https://code.visualstudio.com/docs/sourcecontrol/overview#_cloning-a-repository
