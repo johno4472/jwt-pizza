@@ -2,10 +2,7 @@
 
 ## Summary
 
-
 ```md
-
-
 Between the hour of 12:23 and 12:25 on 12/1/2025, 7 users encountered failed pizza orders. The event was triggered by what I assume is a triggering of the chaos monkey endpoint at 12:23. The triggering of chaos monkey contained no modifications to existing code, just the call of an existing endpoint to simulate pizza failures.
 
 A bug in this code caused internal server erros caused upon pizza creation, because of a chaos monkey error thrown. The event was detected by grafana onCall, which notified me of an unusual amount of pizza failures. The I started working on the event by looking at the logs for any unique error messages, because I received status codes of 500 when trying to autonomously create pizzas. I then filtered to only see logs with 500 level errors and there were the 7 failed pizza orders, with a corresponding link to end the chaos. This mild/moderate severity incident affected 53.8% of users during that time, because 6 out of 13 order attempts during this time were successful. I would grade it as a higher severity incident, but the issue was resolved in a matter of minutes so not many users were affected.
@@ -14,9 +11,6 @@ There was no further impact as far as my resources can tell, and all things are 
 ```
 
 ## Detection
-
-> [!NOTE]
-> When did the team detect the incident? How did they know it was happening? How could we improve time-to-detection? Consider: How would we have cut that time by half?
 
 ```md
 **EXAMPLE**:
@@ -30,9 +24,6 @@ I will modify the alerts that I have so that I do not ignore a valid alert becau
 
 ## Impact
 
-> [!NOTE]
-> Describe how the incident impacted internal and external users during the incident. Include how many support cases were raised.
-
 ```md
 **EXAMPLE**:
 
@@ -44,10 +35,6 @@ This incident affected 7 customers (53.4% OF USERS ENGAGING WITH THE ORDER PIZZA
 ```
 
 ## Timeline
-
-> [!NOTE]
-> Detail the incident timeline. We recommend using UTC to standardize for timezones.
-> Include any notable lead-up events, any starts of activity, the first known impact, and escalations. Note any decisions or changed made, and when the incident ended, along with any post-impact events of note.
 
 ```md
 **EXAMPLE**:
@@ -65,9 +52,6 @@ All times are UTC.
 
 ## Response
 
-> [!NOTE]
-> Who responded to the incident? When did they respond, and what did they do? Note any delays or obstacles to responding.
-
 ```md
 **EXAMPLE**:
 
@@ -78,9 +62,6 @@ John had a background in the order router of the pizza service, so no second ale
 
 ## Root cause
 
-> [!NOTE]
-> Note the final root cause of the incident, the thing identified that needs to change in order to prevent this class of incident from happening again.
-
 ```md
 **EXAMPLE**:
 
@@ -88,10 +69,6 @@ I believe that the triggering of the chaos monkey endpoint is what cause the err
 ```
 
 ## Resolution
-
-> [!NOTE]
-> Describe how the service was restored and the incident was deemed over. Detail how the service was successfully restored and you knew how what steps you needed to take to recovery.
-> Depending on the scenario, consider these questions: How could you improve time to mitigation? How could you have cut that time by half?
 
 ```md
 **EXAMPLE**:
@@ -104,9 +81,6 @@ If I didn't know this, however, and wasn't waiting for the issue to arise, I cou
 
 ## Prevention
 
-> [!NOTE]
-> Now that you know the root cause, can you look back and see any other incidents that could have the same root cause? If yes, note what mitigation was attempted in those incidents and ask why this incident occurred again.
-
 ```md
 **EXAMPLE**:
 
@@ -114,9 +88,6 @@ This root cause has only led to other issues in testing and intentionally inject
 ```
 
 ## Action items
-
-> [!NOTE]
-> Describe the corrective action ordered to prevent this class of incident in the future. Note who is responsible and when they have to complete the work and where that work is being tracked.
 
 ```md
 **EXAMPLE**:
