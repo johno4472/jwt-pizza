@@ -13,8 +13,6 @@ There was no further impact as far as my resources can tell, and all things are 
 ## Detection
 
 ```md
-**EXAMPLE**:
-
 This incident was detected when the PizzaFailure Alert was triggered and I (John Olson) was paged.
 
 No one else was notified because I responded immediately and was able to fix the error.
@@ -25,8 +23,6 @@ I will modify the alerts that I have so that I do not ignore a valid alert becau
 ## Impact
 
 ```md
-**EXAMPLE**:
-
 For 0 hrs 2 minutes between 19:23 UTC and 19:25 UTC on 12/01/25, about half of all pizza orders failed.
 
 This incident affected 7 customers (53.4% OF USERS ENGAGING WITH THE ORDER PIZZA ENDPOINT), who experienced unexplained server errors leading to the failure of pizza creation.
@@ -37,8 +33,6 @@ This incident affected 7 customers (53.4% OF USERS ENGAGING WITH THE ORDER PIZZA
 ## Timeline
 
 ```md
-**EXAMPLE**:
-
 All times are UTC.
 
 - _19:23_ - Chaos endpoint is triggered
@@ -53,8 +47,6 @@ All times are UTC.
 ## Response
 
 ```md
-**EXAMPLE**:
-
 After receiving a page at 19:23 UTC, John Olson came online at 19:23 UTC in Grafana to inspect the issue, and subsequently inspect the jwt pizza service router for ordering a pizza.
 
 John had a background in the order router of the pizza service, so no second alert was sent, and John was able to resolve the issue.
@@ -63,15 +55,12 @@ John had a background in the order router of the pizza service, so no second ale
 ## Root cause
 
 ```md
-**EXAMPLE**:
-
 I believe that the triggering of the chaos monkey endpoint is what cause the error. By setting `enableChaos` to `true`, a random 50% of pizza orders failed.
 ```
 
 ## Resolution
 
 ```md
-**EXAMPLE**:
 By following the link in the logs attached to the failed pizza order requests (with status codes of 500), John was able to quickly stop the chaos and resolve all issues.
 
 I was abel to resolve this issue rather quickly, because I was looking and waiting for an error to happen, and had an idea of where I would find the solution, because I had found in the code that there was a variable created to store the link to follow to disable the chaos.
@@ -82,16 +71,12 @@ If I didn't know this, however, and wasn't waiting for the issue to arise, I cou
 ## Prevention
 
 ```md
-**EXAMPLE**:
-
 This root cause has only led to other issues in testing and intentionally injecting chaos myself, but no real errors in production like this one.
 ```
 
 ## Action items
 
 ```md
-**EXAMPLE**:
-
 1. Create an alert for an abnormal amount of internal server errors
 1. Scan for other security vulnerabilities in my routers (like removing the chaos monkey if it were a real issue)
 1. Figure out how to have normal traffic stay within the expected realm (a grafana dashboard and metrics config issue) so I don't have too many useless alarms so I pay more attention to the real ones.
