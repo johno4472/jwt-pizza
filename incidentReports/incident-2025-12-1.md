@@ -78,6 +78,6 @@ This root cause has only led to other issues in testing and intentionally inject
 
 ```md
 1. Create an alert for an abnormal amount of internal server errors
-1. Scan for other security vulnerabilities in my routers (like removing the chaos monkey if it were a real issue)
-1. Figure out how to have normal traffic stay within the expected realm (a grafana dashboard and metrics config issue) so I don't have too many useless alarms so I pay more attention to the real ones.
+2. Scan for other security vulnerabilities in my routers (like removing the chaos monkey if it were a real issue)
+3. Figure out how to have normal traffic stay within the expected realm (a grafana dashboard and metrics config issue) so I don't have too many useless alarms so I pay more attention to the real ones.
 ```
