@@ -2,11 +2,9 @@
 
 ## Summary
 
-> [!NOTE]
-> Write a summary of the incident in a few sentences. Include what happened, why, the severity of the incident and how long the impact lasted.
 
 ```md
-**EXAMPLE**:
+
 
 Between the hour of 12:23 and 12:25 on 12/1/2025, 7 users encountered failed pizza orders. The event was triggered by what I assume is a triggering of the chaos monkey endpoint at 12:23. The triggering of chaos monkey contained no modifications to existing code, just the call of an existing endpoint to simulate pizza failures.
 
