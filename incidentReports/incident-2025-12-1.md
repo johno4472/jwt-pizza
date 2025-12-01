@@ -1,4 +1,4 @@
-# Incident: YYYY-MM-DD HH-mm-ss
+# Incident: 2025-12-01 12-24-22
 
 ## Summary
 
@@ -8,11 +8,11 @@
 ```md
 **EXAMPLE**:
 
-Between the hour of {time range of incident, e.g. 15:45 and 16:35} on {DATE}, {NUMBER} users encountered {EVENT SYMPTOMS}. The event was triggered by a {CHANGE} at {TIME OF CHANGE THAT CAUSED THE EVENT}. The {CHANGE} contained {DESCRIPTION OF OR REASON FOR THE CHANGE, such as a change in code to update a system}.
+Between the hour of 12:23 and 12:25 on 12/1/2025, 7 users encountered failed pizza orders. The event was triggered by what I assume is a triggering of the chaos monkey endpoint at 12:23. The triggering of chaos monkey contained no modifications to existing code, just the call of an existing endpoint to simulate pizza failures.
 
-A bug in this code caused {DESCRIPTION OF THE PROBLEM}. The event was detected by {MONITORING SYSTEM}. The team started working on the event by {RESOLUTION ACTIONS TAKEN}. This {SEVERITY LEVEL} incident affected {X%} of users.
+A bug in this code caused internal server erros caused upon pizza creation, because of a chaos monkey error thrown. The event was detected by grafana onCall, which notified me of an unusual amount of pizza failures. The I started working on the event by looking at the logs for any unique error messages, because I received status codes of 500 when trying to autonomously create pizzas. I then filtered to only see logs with 500 level errors and there were the 7 failed pizza orders, with a corresponding link to end the chaos. This mild/moderate severity incident affected 53.8% of users during that time, because 6 out of 13 order attempts during this time were successful. I would grade it as a higher severity incident, but the issue was resolved in a matter of minutes so not many users were affected.
 
-There was further impact as noted by {e.g. NUMBER OF SUPPORT TICKETS SUBMITTED, SOCIAL MEDIA MENTIONS, CALLS TO ACCOUNT MANAGERS} were raised in relation to this incident.
+There was no further impact as far as my resources can tell, and all things are back to normal.
 ```
 
 ## Detection
@@ -23,11 +23,11 @@ There was further impact as noted by {e.g. NUMBER OF SUPPORT TICKETS SUBMITTED, 
 ```md
 **EXAMPLE**:
 
-This incident was detected when the {ALERT TYPE} was triggered and {TEAM/PERSON} were paged.
+This incident was detected when the PizzaFailure Alert was triggered and I (John Olson) was paged.
 
-Next, {SECONDARY PERSON} was paged, because {FIRST PERSON} didn't own the service writing to the disk, delaying the response by {XX MINUTES/HOURS}.
+No one else was notified because I responded immediately and was able to fix the error.
 
-{DESCRIBE THE IMPROVEMENT} will be set up by {TEAM OWNER OF THE IMPROVEMENT} so that {EXPECTED IMPROVEMENT}.
+I will modify the alerts that I have so that I do not ignore a valid alert because of too many invalid alerts. For example, every time I redeployed my service, I received several alerts warning me about temporarily high latency, which was an alert that meant nothing. I was also warned about lack of data surrounding endpoints and pizza latency. This was frustrating, because for some reason my configurations led to me being alerted for information I didn't care about. The one most useful alert was a high amount of pizza failures, which never gave me a false positive, so it was the most accurate alert to find the issue, though it is a lot easier to ignore an alert when useless alerts are firing.
 ```
 
 ## Impact
@@ -38,11 +38,11 @@ Next, {SECONDARY PERSON} was paged, because {FIRST PERSON} didn't own the servic
 ```md
 **EXAMPLE**:
 
-For {XXhrs XX minutes} between {XX:XX UTC and XX:XX UTC} on {MM/DD/YY}, {SUMMARY OF INCIDENT} our users experienced this incident.
+For 0 hrs 2 minutes between 19:23 UTC and 19:25 UTC on 12/01/25, about half of all pizza orders failed.
 
-This incident affected {XX} customers (X% OF {SYSTEM OR SERVICE} USERS), who experienced {DESCRIPTION OF SYMPTOMS}.
+This incident affected 7 customers (53.4% OF USERS ENGAGING WITH THE ORDER PIZZA ENDPOINT), who experienced unexplained server errors leading to the failure of pizza creation.
 
-{XX NUMBER OF SUPPORT TICKETS AND XX NUMBER OF SOCIAL MEDIA POSTS} were submitted.
+0 SUPPORT TICKETS AND 0 NUMBER OF SOCIAL MEDIA POSTS were submitted.
 ```
 
 ## Timeline
@@ -56,19 +56,13 @@ This incident affected {XX} customers (X% OF {SYSTEM OR SERVICE} USERS), who exp
 
 All times are UTC.
 
-- _11:48_ - K8S 1.9 upgrade of control plane is finished
-- _12:46_ - Upgrade to V1.9 completed, including cluster-auto scaler and the BuildEng scheduler instance
-- _14:20_ - Build Engineering reports a problem to the KITT Disturbed
-- _14:27_ - KITT Disturbed starts investigating failures of a specific EC2 instance (ip-203-153-8-204)
-- _14:42_ - KITT Disturbed cordons the node
-- _14:49_ - BuildEng reports the problem as affecting more than just one node. 86 instances of the problem show failures are more systemic
-- _15:00_ - KITT Disturbed suggests switching to the standard scheduler
-- _15:34_ - BuildEng reports 200 pods failed
-- _16:00_ - BuildEng kills all failed builds with OutOfCpu reports
-- _16:13_ - BuildEng reports the failures are consistently recurring with new builds and were not just transient.
-- _16:30_ - KITT recognize the failures as an incident and run it as an incident.
-- _16:36_ - KITT disable the Escalator autoscaler to prevent the autoscaler from removing compute to alleviate the problem.
-- _16:40_ - KITT confirms ASG is stable, cluster load is normal and customer impact resolved.
+- _19:23_ - Chaos endpoint is triggered
+- _19:24_ - I notice alert on a jump in pizza failures
+- _19:24_ - I inspect logs and see a 500 level error message containing a link to end the chaos
+- _19:25_ - I follow the chaos link and the webpage notifies me that chaos is over
+- _19:25_ - I return to the pizza factory webpage and verify that chaos has ended
+- _19:25_ - I return to my grafana dashboard and see that pizza latency has decreased to a stable level, and so have pizza failures. Incident is resolved.
+- _20:03_ - I write this exact line in my incident report
 ```
 
 ## Response
@@ -79,9 +73,9 @@ All times are UTC.
 ```md
 **EXAMPLE**:
 
-After receiving a page at {XX:XX UTC}, {ON-CALL ENGINEER} came online at {XX:XX UTC} in {SYSTEM WHERE INCIDENT INFO IS CAPTURED}.
+After receiving a page at 19:23 UTC, John Olson came online at 19:23 UTC in Grafana to inspect the issue, and subsequently inspect the jwt pizza service router for ordering a pizza.
 
-This engineer did not have a background in the {AFFECTED SYSTEM} so a second alert was sent at {XX:XX UTC} to {ESCALATIONS ON-CALL ENGINEER} into the who came into the room at {XX:XX UTC}.
+John had a background in the order router of the pizza service, so no second alert was sent, and John was able to resolve the issue.
 ```
 
 ## Root cause
@@ -92,7 +86,7 @@ This engineer did not have a background in the {AFFECTED SYSTEM} so a second ale
 ```md
 **EXAMPLE**:
 
-A bug in connection pool handling led to leaked connections under failure conditions, combined with lack of visibility into connection state.
+I believe that the triggering of the chaos monkey endpoint is what cause the error. By setting `enableChaos` to `true`, a random 50% of pizza orders failed.
 ```
 
 ## Resolution
@@ -103,10 +97,11 @@ A bug in connection pool handling led to leaked connections under failure condit
 
 ```md
 **EXAMPLE**:
-By Increasing the size of the BuildEng EC3 ASG to increase the number of nodes available to support the workload and reduce the likelihood of scheduling on oversubscribed nodes
+By following the link in the logs attached to the failed pizza order requests (with status codes of 500), John was able to quickly stop the chaos and resolve all issues.
 
-Disabled the Escalator autoscaler to prevent the cluster from aggressively scaling-down
-Reverting the Build Engineering scheduler to the previous version.
+I was abel to resolve this issue rather quickly, because I was looking and waiting for an error to happen, and had an idea of where I would find the solution, because I had found in the code that there was a variable created to store the link to follow to disable the chaos.
+
+If I didn't know this, however, and wasn't waiting for the issue to arise, I could speed up mitigation time by attaching an alert to a high number of internal server errors, because those have pretty much been unique to this kind of issue.
 ```
 
 ## Prevention
@@ -117,7 +112,7 @@ Reverting the Build Engineering scheduler to the previous version.
 ```md
 **EXAMPLE**:
 
-This same root cause resulted in incidents HOT-13432, HOT-14932 and HOT-19452.
+This root cause has only led to other issues in testing and intentionally injecting chaos myself, but no real errors in production like this one.
 ```
 
 ## Action items
@@ -128,7 +123,7 @@ This same root cause resulted in incidents HOT-13432, HOT-14932 and HOT-19452.
 ```md
 **EXAMPLE**:
 
-1. Manual auto-scaling rate limit put in place temporarily to limit failures
-1. Unit test and re-introduction of job rate limiting
-1. Introduction of a secondary mechanism to collect distributed rate information across cluster to guide scaling effects
+1. Create an alert for an abnormal amount of internal server errors
+1. Scan for other security vulnerabilities in my routers (like removing the chaos monkey if it were a real issue)
+1. Figure out how to have normal traffic stay within the expected realm (a grafana dashboard and metrics config issue) so I don't have too many useless alarms so I pay more attention to the real ones.
 ```
